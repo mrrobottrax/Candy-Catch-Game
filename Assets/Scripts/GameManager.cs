@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject endScreen;
     [SerializeField] TMP_Text endScoreText;
+    [SerializeField] TMP_Text scoreText;
 
     private void Awake()
     {
@@ -28,5 +29,14 @@ public class GameManager : MonoBehaviour
     {
         GetComponent<CandySpawn>().StartGame();
         endScreen.SetActive(false);
+        score = 0;
+
+        AddScore(0);
+    }
+
+    public void AddScore(int points)
+    {
+        score += points;
+        scoreText.text = $"Score {score}";
     }
 }
