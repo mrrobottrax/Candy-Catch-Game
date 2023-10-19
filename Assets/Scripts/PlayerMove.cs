@@ -20,7 +20,6 @@ public class PlayerMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;
-        rb.isKinematic = true;
     }
 
     private void Start()

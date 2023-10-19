@@ -75,7 +75,7 @@ public class CandySpawn : MonoBehaviour
 
         GameObject candy =  Instantiate(candyPrefab, new Vector3(xPos, startY, 0), Quaternion.identity);
         candy.GetComponent<SpriteRenderer>().sprite = candies[index].sprite;
-        candy.GetComponent<Candy>().SetFallSpeed(candies[index].fallSpeed);
+        candy.GetComponent<Candy>().SetScriptableObject(candies[index]);
 
         ++candiesSpawned;
     }

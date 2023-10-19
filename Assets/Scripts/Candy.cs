@@ -5,19 +5,24 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Candy : MonoBehaviour
 {
-    [SerializeField] float fallSpeed = 10;
+    CandyScriptableObject candyScriptableObject;
 
     private Rigidbody2D rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = new Vector2(0, -fallSpeed);
     }
 
-    public void SetFallSpeed(float speed)
+    public void SetScriptableObject(CandyScriptableObject candyScriptableObject)
     {
-        fallSpeed = speed;
+        this.candyScriptableObject = candyScriptableObject;
+        rb.velocity = new Vector2(0, -candyScriptableObject.fallSpeed);
+    }
+
+    public CandyScriptableObject GetScriptableObject()
+    {
+        return candyScriptableObject;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
