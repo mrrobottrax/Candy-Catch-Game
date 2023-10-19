@@ -52,6 +52,17 @@ public class CandySpawn : MonoBehaviour
         {
             StartCoroutine(ICandySpawnTimer());
         }
+        else
+        {
+            StartCoroutine(IEndGame());
+        }
+    }
+
+    IEnumerator IEndGame()
+    {
+        yield return new WaitForSeconds(5);
+
+        GameManager.Singleton.EndGame();
     }
 
     private void SpawnCandy()
