@@ -6,44 +6,53 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] float _speed = 0.3f;
-    [SerializeField] float _acceleration = 3.0f;
-    [SerializeField] float _friction = 1.0f;
+    [SerializeField] float speed = 12.0f;
+    [SerializeField] float acceleration = 120.0f;
+    [SerializeField] float friction = 40.0f;
 
-    private InputAction _moveAction;
-    private Rigidbody2D _rb;
+    private InputAction moveAction;
+    private Rigidbody2D rb;
 
     [SerializeField] float minX = -9;
     [SerializeField] float maxX = 9;
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _rb.bodyType = RigidbodyType2D.Kinematic;
-        _rb.isKinematic = true;
+        rb = GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Kinematic;
+        rb.isKinematic = true;
     }
 
     private void Start()
     {
-        _moveAction = Controls.Singleton.IngameActionMap.FindAction("Move", true);
+        moveAction = Controls.Singleton.IngameActionMap.FindAction("Move", true);
     }
 
     private void Update()
     {
-        float moveDir = _moveAction.ReadValue<float>();
+        float moveDir = moveAction.ReadValue<float>();
 
-        float vel = _rb.velocity.x;
+        float vel = rb.velocity.x;
 
-        vel = Friction(vel, _friction, Time.deltaTime);
-        vel = Accelerate(vel, _speed, _acceleration * moveDir, Time.deltaTime);
+        vel = Friction(vel, friction, Time.deltaTime);
+        vel = Accelerate(vel, speed, acceleration * moveDir, Time.deltaTime);
 
-        _rb.velocity = new Vector2(vel, 0);
+        // stop at sides of screen
+        Vector2 pos = rb.position + Time.fixedDeltaTime * vel * Vector2.right;
+        if (pos.x < minX)
+        {
+            pos.x = minX;
+            rb.MovePosition(pos);
+            vel = 0;
+        }
+        else if (pos.x > maxX)
+        {
+            pos.x = maxX;
+            rb.MovePosition(pos);
+            vel = 0;
+        }
 
-        Vector2 newPos = _rb.position + Vector2.right * _rb.velocity.x;
-
-        newPos.x = Mathf.Clamp(newPos.x, minX, maxX);
-
-        _rb.MovePosition(newPos);
+        rb.velocity = vel * Vector2.right;
     }
 
     private float Accelerate(float velocity, float maxVelocity, float acceleration, float deltaT)
