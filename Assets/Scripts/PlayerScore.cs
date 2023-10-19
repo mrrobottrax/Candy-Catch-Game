@@ -8,15 +8,13 @@ public class PlayerScore : MonoBehaviour
 {
     [SerializeField] TMP_Text scoreText;
     
-    int score = 0;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Candy candy;
         if (collision.gameObject.TryGetComponent<Candy>(out candy))
         {
-            score += candy.GetScriptableObject().pointValue;
-            scoreText.text = $"Score: {score}";
+            GameManager.Singleton.score += candy.GetScriptableObject().pointValue;
+            scoreText.text = $"Score: {GameManager.Singleton.score}";
 
             Destroy(collision.gameObject);
         }
