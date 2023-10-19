@@ -12,8 +12,6 @@ public class PlayerScore : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("TEST");
-
         Candy candy;
         if (collision.gameObject.TryGetComponent<Candy>(out candy))
         {
