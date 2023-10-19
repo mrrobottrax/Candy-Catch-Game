@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-
+        GetComponent<CandySpawn>().StartGame();
+        endScreen.SetActive(false);
     }
 }
