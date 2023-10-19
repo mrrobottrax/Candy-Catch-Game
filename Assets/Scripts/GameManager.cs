@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         endScreen.SetActive(true);
-        endScoreText.text = $"Score {score}";
+        endScoreText.text = $"Score: {score}";
     }
 
     public void RestartGame()
@@ -37,6 +37,6 @@ public class GameManager : MonoBehaviour
     public void AddScore(int points)
     {
         score += points;
-        scoreText.text = $"Score {score}";
+        scoreText.text = $"Score: {score}";
     }
 }
